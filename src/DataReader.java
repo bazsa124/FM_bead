@@ -47,7 +47,7 @@ public class DataReader {
     }
 
     private static void parseResource(String line, List<Resource> resources) {
-        String[] parts = line.split(" ", 3);
+        String[] parts = line.split("\\|", 3);
         String name = parts[0];
         int bufferSize = Integer.parseInt(parts[1]);
         Resource resource = new Resource(name, bufferSize);
@@ -66,7 +66,7 @@ public class DataReader {
     }
 
     private static void parseOperation(String line, Map<String, OperationType> operationTypes) {
-        String[] parts = line.split(" ");
+        String[] parts = line.split("\\|");
         String name = parts[0];
         int duration = Integer.parseInt(parts[1]);
         String requiredResourceId = parts[2];
@@ -77,11 +77,12 @@ public class DataReader {
     }
 
     private static void parseJob(String line, List<Job> jobs, Map<String, OperationType> operationTypes) {
-        String[] parts = line.split(" ", 2);
+        String[] parts = line.split("\\|", 2);
         String jobName = parts[0];
-        Job job = new Job(jobName);
+        String id=parts[1];
+        Job job = new Job(id,jobName);
 
-        String opsPart = parts[1].replaceAll("[{}\\[\\]]", "");
+        String opsPart = parts[2].replaceAll("[{}\\[\\]]", "");
         String[] operations = opsPart.split(";");
 
         for (String opDef : operations) {

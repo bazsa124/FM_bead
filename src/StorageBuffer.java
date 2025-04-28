@@ -29,4 +29,15 @@ public class StorageBuffer {
         return queue.contains(operation);
     }
 
+    public void increaseIdleTime(){
+        if(!queue.isEmpty()){
+            for(JobOperation operation: queue)
+                operation.increaseIdleTime();
+        }
+    }
+
+    public int size() {
+        return queue.size();
+    }
+
 }
