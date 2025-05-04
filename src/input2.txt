@@ -1,0 +1,25 @@
+Resources (name, buffersize, available from to)
+mustarDispenser|5|{[08:00,09:15];[09:20,11:00]}
+mustarDispenser|5|{[08:00,11:00]}
+husSuto|2|{[08:00,16:00]}
+ketchupDispenser|5|{[08:00,16:00]}
+zoldsegAllomas|3|{[08:00,16:00]}
+majonezDispenser|5|{[08:00,16:00]}
+sajtRako|3|{[08:00,16:00]}
+
+
+Operations (name, duration, required)
+Mustar|3|mustarDispenser
+Hus|5|husSuto
+Ketchup|2|ketchupDispenser
+Zöldség|2|zoldsegAllomas
+Majonéz|2|majonezDispenser
+Sajt|1|sajtRako
+
+Jobs (name, operations[operation name, sequenceNumber])
+Hamburger|1|{[Mustar,1];[Ketchup,2];[Zöldség,3];[Hus,4];[Majonéz,5];[Sajt,6]}
+Hamburger|4|{[Mustar,1];[Ketchup,2];[Zöldség,3];[Hus,4];[Majonéz,5];[Sajt,6]}
+Hamburger|5|{[Mustar,1];[Ketchup,2];[Zöldség,3];[Hus,4];[Majonéz,5];[Sajt,6]}
+Hamburger|6|{[Mustar,1];[Ketchup,2];[Zöldség,3];[Hus,4];[Majonéz,5];[Sajt,6]}
+Hamburger|7|{[Mustar,1];[Ketchup,2];[Zöldség,3];[Hus,4];[Majonéz,5];[Sajt,6]}
+Hamburger|8|{[Mustar,1];[Ketchup,2];[Zöldség,3];[Hus,4];[Majonéz,5];[Sajt,6]}

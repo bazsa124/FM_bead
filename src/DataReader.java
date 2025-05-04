@@ -77,7 +77,7 @@ public class DataReader {
     }
 
     private static void parseJob(String line, List<Job> jobs, Map<String, OperationType> operationTypes) {
-        String[] parts = line.split("\\|", 2);
+        String[] parts = line.split("\\|", 3);
         String jobName = parts[0];
         String id=parts[1];
         Job job = new Job(id,jobName);

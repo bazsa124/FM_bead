@@ -8,9 +8,7 @@ public class Main {
     static List<Job> jobs=new ArrayList<>();
     static List<Resource> resources=new ArrayList<>();
     public static void main(String[] args) throws InterruptedException {
-        //TODO:idle time, out of operation, worked from to, to Resources
-        //setBasicData();
-        DataReader.readFromFile("src/input.txt",jobs,resources);
+        DataReader.readFromFile("src/input2.txt",jobs,resources);
         System.out.println("Basic data set: Jobs: "+jobs.size()+", Resources: "+resources.size());
         try {
             new Simulation(LocalTime.of(9,0),jobs,resources).run();

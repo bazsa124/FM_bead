@@ -8,7 +8,7 @@ public class Resource {
     boolean isBusy;
 
     int idleTime=0;
-     JobOperation currentOperation;
+     Job currentJob;
 
     public Resource(String id, int bufferCapacity) {
         this.id = id;
@@ -35,24 +35,24 @@ public class Resource {
         availableTimes.add(window);
     }
 
-    public void assignOperation(JobOperation operation){
-        currentOperation=operation;
+    public void assignOperation(Job operation){
+        currentJob=operation;
         isBusy=true;
     }
 
-    public void workOneMinute(LocalTime currentTime, int timeUnit){
-        currentOperation.workOneMinute(currentTime,timeUnit);
+    public void workOneMinute(LocalTime currentTime, int timeUnit,  List<Resource> resources){
+        currentJob.getCurrentOperation().workOneMinute(currentTime,timeUnit);
         buffer.increaseIdleTime();
-        if (currentOperation.isCompleted()){
-            JobOperation nextOperation=buffer.poll();
-            if(nextOperation==null) {
+        if (currentJob.getCurrentOperation().isCompleted() && currentJob.checkForEmptyBuffer(resources)){
+            Job nextJob=buffer.poll();
+            if(nextJob==null) {
                 isBusy = false;
-                currentOperation = null;
+                currentJob = null;
             }
             else{
-                Logger.addHistory("[" + currentTime + "] Bufferból kiosztva: " + nextOperation.getOperationType().getName());
-                nextOperation.setStartTime(currentTime);
-                currentOperation=nextOperation;
+                Logger.addHistory("[" + currentTime + "] Bufferból kiosztva: " + nextJob.getCurrentOperation().getOperationType().getName());
+                nextJob.getCurrentOperation().setStartTime(currentTime);
+                currentJob=nextJob;
             }
         }
     }

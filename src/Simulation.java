@@ -1,6 +1,8 @@
 import java.time.LocalTime;
 import java.util.List;
 
+import static java.lang.Thread.sleep;
+
 public class Simulation {
     private LocalTime currentTime;
     private List<Job> jobs;
@@ -18,14 +20,15 @@ public class Simulation {
         while (!allJobsCompleted()) {
             processJobs();
             advanceTime(timeStepMinutes);
+            //sleep(1000);
         }
     }
 
     private void processJobs() {
         for (Job job : jobs) {
-            if(job.isCurrentCompleted() && job.isJobCompleted()) {
+            if(job.isCurrentCompleted() && job.isJobCompleted() && job.checkForEmptyBuffer(resources)) {
                 Logger.addHistory("[" + currentTime + "] Getting next operation of Job: " + job.getName());
-                JobOperation nextOperation = job.getNextPendingOperation();
+                JobOperation nextOperation = job.getNextPendingOperation(true);
                 if (nextOperation != null) {
                     tryAssignOperation(nextOperation,job);
                 }
@@ -39,7 +42,7 @@ public class Simulation {
 
         for (Resource resource : requiredResources) {
             if (resource.isAvailable(currentTime) && !resource.isBusy) {
-                resource.assignOperation(operation);
+                resource.assignOperation(job);
                 operation.setStartTime(currentTime);
                 Logger.addHistory("[" + currentTime + "] Közvetlen kiosztás: " + operation.getOperationType().getName() + " of " + job.getName());
                 return;
@@ -48,7 +51,7 @@ public class Simulation {
 
         for (Resource resource : requiredResources) {
             if (!resource.getBuffer().isFull()) {
-                boolean added = resource.getBuffer().add(operation);
+                boolean added = resource.getBuffer().add(job);
                 if (added) {
                     operation.setStartTime(currentTime);
                     Logger.addHistory("[" + currentTime + "] Váróterembe rakás: " + operation.getOperationType().getName() + " of " + job.getName());
@@ -67,8 +70,8 @@ public class Simulation {
         currentTime = currentTime.plusMinutes(timeUnit);
         for (Resource resource : resources){
             if(resource.isAvailable(currentTime)) {
-                if (resource.currentOperation != null)
-                    resource.workOneMinute(currentTime,timeUnit);
+                if (resource.currentJob != null)
+                    resource.workOneMinute(currentTime,timeUnit,resources);
                 else
                     resource.idleTime++;
             }

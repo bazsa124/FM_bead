@@ -5,6 +5,7 @@ public class Logger {
     private static List<String> history=new ArrayList<>();
 
     public static void addHistory(String line){
+        //System.out.println(line); //For debug
         history.add(line);
     }
 

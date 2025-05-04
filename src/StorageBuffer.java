@@ -3,21 +3,21 @@ import java.util.Queue;
 
 public class StorageBuffer {
     private int capacity;
-    private Queue<JobOperation> queue = new LinkedList<>();
+    private Queue<Job> queue = new LinkedList<>();
 
     public StorageBuffer(int capacity) {
         this.capacity = capacity;
     }
 
-    public boolean add(JobOperation operation) {
+    public boolean add(Job job) {
         if (queue.size() < capacity) {
-            queue.add(operation);
+            queue.add(job);
             return true;
         }
         return false;
     }
 
-    public JobOperation poll() {
+    public Job poll() {
         return queue.poll();
     }
 
@@ -25,14 +25,14 @@ public class StorageBuffer {
         return queue.size() >= capacity;
     }
 
-    public boolean doesContain(JobOperation operation){
-        return queue.contains(operation);
+    public boolean doesContain(Job job){
+        return queue.contains(job);
     }
 
     public void increaseIdleTime(){
         if(!queue.isEmpty()){
-            for(JobOperation operation: queue)
-                operation.increaseIdleTime();
+            for(Job job: queue)
+                job.getCurrentOperation().increaseIdleTime();
         }
     }
 

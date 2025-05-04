@@ -24,15 +24,23 @@ public class Job {
         return operations;
     }
 
-    public JobOperation getNextPendingOperation() {
+    public JobOperation getNextPendingOperation(boolean set) {
         int nextIndex=operations.indexOf(currentOperation)+1;
         if (currentOperation!=operations.getLast()) {
-            currentOperation = operations.get(nextIndex);
-            //System.out.println("Setting current operation to: " + currentOperation.getOperationType().getName());
+            if(set)
+                currentOperation = operations.get(nextIndex);
             return operations.get(nextIndex);
         }
         else
             return null;
+    }
+
+    public void setToNextOperation(int nextIndex){
+        currentOperation = operations.get(nextIndex);
+    }
+
+    public JobOperation getCurrentOperation(){
+        return currentOperation;
     }
 
     public void setToPreviousOperation(){
@@ -72,5 +80,22 @@ public class Job {
 
     public LocalTime jobStart(){
         return operations.getFirst().getStartTime();
+    }
+
+    public boolean checkForEmptyBuffer(List<Resource> resources){
+        if(currentOperation==null || getNextPendingOperation(false)==null)
+            return true;
+        List<Resource> assignableTo=new ArrayList<>();
+        for(Resource r:resources){
+            if(r.id.equals(getNextPendingOperation(false).getOperationType().requiredResource)){
+                assignableTo.add(r);
+            }
+        }
+
+        for(Resource r:assignableTo){
+            if(!r.getBuffer().isFull() || !r.isBusy)
+                return true;
+        }
+        return false;
     }
 }

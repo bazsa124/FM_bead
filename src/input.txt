@@ -21,9 +21,9 @@ Krumpli|5|krumpliSuto
 Sózás|1|sozoAllomas
 
 Jobs (name, operations[operation name, sequenceNumber])
-Hamburger|1|{[Mustar,1];[Ketchup,2];[Zöldség,3];[Hus,4];[Majonéz,5];[Sajt,6]}
 Hotdog|2|{[Kolbász,1];[Ketchup,2];[Mustar,3]}
 Sült Krumpli|3|{[Krumpli,1];[Sózás,2]}
+Hamburger|1|{[Mustar,1];[Ketchup,2];[Zöldség,3];[Hus,4];[Majonéz,5];[Sajt,6]}
 Hamburger|4|{[Mustar,1];[Ketchup,2];[Zöldség,3];[Hus,4];[Majonéz,5];[Sajt,6]}
 Hamburger|5|{[Mustar,1];[Ketchup,2];[Zöldség,3];[Hus,4];[Majonéz,5];[Sajt,6]}
 Hamburger|6|{[Mustar,1];[Ketchup,2];[Zöldség,3];[Hus,4];[Majonéz,5];[Sajt,6]}
